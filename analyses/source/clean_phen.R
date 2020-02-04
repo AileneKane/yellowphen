@@ -25,4 +25,11 @@ genus.species$gen.sp<-paste(genus.species$genus,genus.species$species,sep=".")
 
 phen<-cbind(genus.species,phen)
 phen<-phen[,-4]
-
+for (i in 4:dim(phen)[2]){
+  phen[,i]<-as.numeric(phen[,i])
+}
+phenw<-phen[,3:(dim(phen)[2]-1)]
+phenw$gen.sp<-as.factor(phenw$gen.sp)
+#convert phen from wide to long format
+phenl <- gather(phenw, year, fldoy, X1982:X2016, factor_key=TRUE)
+phenl$year<-substr(phenl$year,2,5)
